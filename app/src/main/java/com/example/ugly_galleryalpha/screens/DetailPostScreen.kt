@@ -27,11 +27,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.ugly_galleryalpha.R
 import com.example.ugly_galleryalpha.ui.theme.Ugly_galleryALPHATheme
 
 @Composable
-fun DetailPostScreen(){
+fun DetailPostScreen(
+    navController: NavController
+){
     Column(
         modifier = Modifier.fillMaxSize()
     ){
@@ -84,12 +88,13 @@ fun DetailPostScreen(){
                 .background(color = Color.Gray, shape = RoundedCornerShape(16.dp))
                 .align(Alignment.CenterHorizontally)
         ){
-
+            
         }
 
         Spacer(modifier = Modifier.padding(8.dp))
         Text(modifier = Modifier.padding(start = 48.dp, end = 48.dp),
             text = "Описание")
+
     }
 }
 
@@ -97,6 +102,6 @@ fun DetailPostScreen(){
 @Composable
 fun DetailPostPreview() {
     Ugly_galleryALPHATheme {
-        DetailPostScreen()
+        DetailPostScreen(rememberNavController())
     }
 }

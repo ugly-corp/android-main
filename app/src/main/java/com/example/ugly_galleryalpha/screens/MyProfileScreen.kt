@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Button
 import androidx.compose.material.Icon
@@ -37,45 +39,70 @@ fun MyProfileScreen(){
         modifier = Modifier.fillMaxSize()
     ){
         Spacer(modifier = Modifier.padding(10.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
-        ){
+        Box(
+            modifier = Modifier
+                .height(170.dp)
+                .fillMaxWidth()
+        ) {
             Box(
-                modifier = Modifier
-                    .size(92.dp)
-                    .clip(shape = CircleShape)
-                    .align(Alignment.CenterVertically)
-            ){
-                Image(
-                    painter = painterResource(id = R.drawable.photo1),
-                    contentDescription = (null),
-                    contentScale = ContentScale.Crop
-                )
+                modifier = Modifier.align(Alignment.Center)
+            ) {
+                Box(
+                    modifier = Modifier.size(130.dp)
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.photo1),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clip(shape = CircleShape))
+                }
             }
 
-            Icon(
-                painter = painterResource(id = R.drawable.baseline_create_24),
-                contentDescription = null,
-                modifier = Modifier.align(Alignment.Bottom)
-            )
+            Row(
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(end = 10.dp, top = 10.dp)
+            ) {
+                Box(
+                    modifier = Modifier.size(20.dp)
+                ) {
+                    Icon(
+                        painterResource(id = R.drawable.baseline_create_24),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
 
-            Row(){
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_share_24),
-                    contentDescription = null,
-                )
-
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_notifications_24),
-                    contentDescription = null
-                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Box(
+                    modifier = Modifier.size(20.dp)
+                ) {
+                    Icon(painterResource(id = R.drawable.baseline_create_24),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize())
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(start = 10.dp, bottom = 10.dp)
+            ) {
+                Box(
+                    modifier = Modifier.size(20.dp)
+                ) {
+                    Icon(painterResource(id = R.drawable.baseline_create_24),
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize())
+                }
             }
         }
 
-        MyName(name = "Kirill", info = "I love UG")
+        MyName(name = "User", info = "User_info")
     }
 }
+
 
 //Имя и описание
 @Composable

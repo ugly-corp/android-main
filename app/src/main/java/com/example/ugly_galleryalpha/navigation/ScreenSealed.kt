@@ -7,4 +7,6 @@ sealed class ScreenSealed(
     object Auth: ScreenSealed(route = "auth_screen")
     object Register: ScreenSealed(route = "register_screen")
     object Home: ScreenSealed(route = "home_screen")
+
+    object DetailPost: ScreenSealed(route = "detail_post")
 }

@@ -7,8 +7,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.ugly_galleryalpha.navigation.bottom.BottomItem
 import com.example.ugly_galleryalpha.screens.AuthScreen
+import com.example.ugly_galleryalpha.screens.DetailPostScreen
 import com.example.ugly_galleryalpha.screens.FavoritePostScreen
 import com.example.ugly_galleryalpha.screens.HomeScreen
+import com.example.ugly_galleryalpha.screens.MyProfileScreen
 import com.example.ugly_galleryalpha.screens.RegisterScreen
 import com.example.ugly_galleryalpha.screens.SearchCotegoryScreen
 import com.example.ugly_galleryalpha.screens.StartScreen
@@ -43,14 +45,14 @@ fun NavGraphScreen(
             composable(
                 route = ScreenSealed.Home.route
             ){
-                HomeScreen()
+                HomeScreen(navController = navHostController)
             }
 
             // Navigation bar
             composable(
                 route = BottomItem.ScreenHome.route
             ){
-                HomeScreen()
+                HomeScreen(navController = navHostController)
             }
 
             composable(
@@ -68,7 +70,14 @@ fun NavGraphScreen(
             composable(
                 BottomItem.ScreenProfile.route
             ){
-                FavoritePostScreen()
+                MyProfileScreen()
+            }
+
+            //открытия поста (пока не придумал как именно) ->
+            composable(
+                route = ScreenSealed.DetailPost.route
+            ){
+                DetailPostScreen(navController = navHostController)
             }
     }
 }
