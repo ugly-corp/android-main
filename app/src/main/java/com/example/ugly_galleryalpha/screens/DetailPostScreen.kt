@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,11 +31,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.ugly_galleryalpha.R
+import com.example.ugly_galleryalpha.model.postLentaModel
 import com.example.ugly_galleryalpha.ui.theme.Ugly_galleryALPHATheme
 
 @Composable
 fun DetailPostScreen(
     navController: NavController
+
 ){
     Column(
         modifier = Modifier.fillMaxSize()
@@ -47,14 +50,12 @@ fun DetailPostScreen(
             modifier = Modifier.fillMaxWidth()
         ){
             Text(
-                text = "Название работы",
+                text = "name_work",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
                 )
 
-            Button(onClick = { /*TODO*/ }) {
-
-            }
+            Icon(painter = painterResource(id = R.drawable.baseline_share_24), contentDescription = null)
         }
 
         Row(
@@ -67,6 +68,8 @@ fun DetailPostScreen(
                     .size(48.dp)
                     .clip(shape = CircleShape)
             ){
+
+                //иконка автора
                 Image(
                     painter = painterResource(id = R.drawable.photo1),
                     contentDescription = (null),
@@ -74,14 +77,17 @@ fun DetailPostScreen(
                 )
             }
             Spacer(modifier = Modifier.padding(4.dp))
+
+            //имя автора
             Text(
-                text = "Имя автора",
+                text = "name_artist",
                 fontSize = 18.sp,
                 modifier = Modifier.align(Alignment.CenterVertically)
             )
         }
 
         Spacer(modifier = Modifier.padding(top = 40.dp))
+        //работа автора
         Box(
             modifier = Modifier
                 .size(307.dp)
@@ -92,11 +98,16 @@ fun DetailPostScreen(
         }
 
         Spacer(modifier = Modifier.padding(8.dp))
+
+        //описание
         Text(modifier = Modifier.padding(start = 48.dp, end = 48.dp),
-            text = "Описание")
+            text = "opisanie")
 
     }
 }
+
+//тест модели ->
+
 
 @Preview(showBackground = true)
 @Composable
@@ -105,3 +116,4 @@ fun DetailPostPreview() {
         DetailPostScreen(rememberNavController())
     }
 }
+

@@ -73,11 +73,11 @@ fun NavGraphScreen(
                 MyProfileScreen()
             }
 
+        // код с открытием внизу
+
             //открытия поста (пока не придумал как именно) ->
-            composable(
-                route = ScreenSealed.DetailPost.route
-            ){
-                DetailPostScreen(navController = navHostController)
-            }
+        composable(ScreenSealed.DetailPost.route) {
+            DetailPostScreen(navController = navHostController)
+        }
     }
 }
