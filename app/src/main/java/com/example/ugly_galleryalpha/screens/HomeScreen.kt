@@ -42,10 +42,10 @@ private val post_list = mutableListOf<postLentaModel>()
 @Composable
 fun HomeScreen(navController: NavController){
     //Добавление элементов тест
-    post_list.add(postLentaModel("Geralt", "Персонаж", R.drawable.photo1, "bla1", 1, "Geralt", "Персонаж", R.drawable.photo1, "bla1", 5))
-    post_list.add(postLentaModel("Over_lord", "Аниме", R.drawable.photo2, "bla1", 2, "Over_lord", "Аниме", R.drawable.photo2, "bla1", 6))
-    post_list.add(postLentaModel("Mr_wagner", "Оружие", R.drawable.photo3, "bla1", 3, "Mr_wagner", "Оружие", R.drawable.photo3, "bla1", 5))
-    post_list.add(postLentaModel("Рофло-кошки", "Кошка", R.drawable.photo4, "bla1", 4, "Рофло-кошки", "Кошка", R.drawable.photo4, "bla1", 7))
+    post_list.add(postLentaModel("Geralt", "Персонаж", R.drawable.photo1, "bla1", 1))
+    post_list.add(postLentaModel("Over_lord", "Аниме", R.drawable.photo2, "bla1", 2))
+    post_list.add(postLentaModel("Mr_wagner", "Оружие", R.drawable.photo3, "bla1", 3))
+    post_list.add(postLentaModel("Рофло-кошки", "Кошка", R.drawable.photo4, "bla1", 4))
     Column(
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -70,8 +70,6 @@ fun HomeScreen(navController: NavController){
                 )
             }
         }
-
-
 
 
     }
@@ -100,7 +98,9 @@ fun PostLenta(
                 contentScale = ContentScale.Crop
             )
         }
+
         Spacer(modifier = Modifier.padding(4.dp))
+
         Text(
             modifier = Modifier.padding(start = 16.dp),
             text = model.name_artist

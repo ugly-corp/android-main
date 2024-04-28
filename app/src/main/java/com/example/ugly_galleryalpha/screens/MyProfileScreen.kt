@@ -5,8 +5,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,9 +16,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,12 +33,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.ugly_galleryalpha.R
+import com.example.ugly_galleryalpha.navigation.ScreenSealed
+import com.example.ugly_galleryalpha.ui.theme.UGreen
 import com.example.ugly_galleryalpha.ui.theme.Ugly_galleryALPHATheme
 
 @Composable
-fun MyProfileScreen(){
+fun MyProfileScreen(navController: NavController){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
@@ -100,7 +108,25 @@ fun MyProfileScreen(){
         }
 
         MyName(name = "User", info = "User_info")
+        ButtonSettingandHelp(navController = navController)
+
+
+
     }
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(100.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Bottom
+
+    ){
+        add_photo()
+    }
+
+
+
 }
 
 
@@ -127,32 +153,80 @@ fun MyName(name: String, info: String){
 
         Spacer(modifier = Modifier.padding(8.dp))
 
-        ButtonSettingandHelp()
     }
 }
 
 //Кнопки Настройки && Помощь
 @Composable
-fun ButtonSettingandHelp(){
-    Row(){
+fun ButtonSettingandHelp(navController: NavController){
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween
+    ){
 
         //Настройки кнопка ->
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "Найстройка")
+        Button(
+            onClick = {
+                navController.navigate(ScreenSealed.UserSettings.route)
+            },
+            contentPadding = PaddingValues(0.dp),
+            modifier = Modifier.size(height = 22.dp, width = 128.dp),
+            colors = ButtonDefaults.buttonColors(Color.Black),
+            shape = RoundedCornerShape(36.dp)
+        ) {
+            Text(
+                fontSize = 12.sp,
+                text = "Настройка",
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
         }
+        Spacer(modifier = Modifier.padding(start = 100.dp))
 
         //Помощь кнопка ->
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "Помошь")
+        Button(
+            modifier = Modifier
+                .defaultMinSize(minHeight = 1.dp, minWidth = 1.dp)
+                .size(height = 22.dp, width = 128.dp),
+            onClick = { /*TODO*/ },
+            contentPadding = PaddingValues(0.dp),
+            colors = ButtonDefaults.buttonColors(Color.Gray),
+            shape = RoundedCornerShape(36.dp)
+
+        ) {
+
+            Text(
+                fontSize = 12.sp,
+                text = "Помощь",
+                color = Color.Black,
+                fontWeight = FontWeight.Bold
+            )
+
         }
     }
 }
 
-
+//Добавление фото
+@Composable
+fun add_photo(){
+    Button(
+        colors = ButtonDefaults.buttonColors(Color.Black),
+        onClick = { /*TODO*/ },
+        shape = CircleShape,
+        contentPadding = PaddingValues(0.dp),
+        modifier = Modifier.size(46.dp)
+    ) {
+        Icon(
+            painter = painterResource(id = R.drawable.baseline_add_24),
+            contentDescription = "add photo",
+            tint = Color.White,
+            modifier = Modifier.size(35.dp)
+        )
+    }
+}
 @Preview(showBackground = true)
 @Composable
 fun MyProfilePreview() {
     Ugly_galleryALPHATheme {
-        MyProfileScreen()
+        MyProfileScreen(navController = rememberNavController())
     }
 }

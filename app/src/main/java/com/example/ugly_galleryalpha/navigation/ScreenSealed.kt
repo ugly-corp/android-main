@@ -9,4 +9,6 @@ sealed class ScreenSealed(
     object Home: ScreenSealed(route = "home_screen")
 
     object DetailPost: ScreenSealed(route = "detail_post")
+
+    object UserSettings: ScreenSealed(route = "setting_post")
 }

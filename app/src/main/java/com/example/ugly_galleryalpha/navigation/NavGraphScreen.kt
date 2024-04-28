@@ -13,6 +13,7 @@ import com.example.ugly_galleryalpha.screens.HomeScreen
 import com.example.ugly_galleryalpha.screens.MyProfileScreen
 import com.example.ugly_galleryalpha.screens.RegisterScreen
 import com.example.ugly_galleryalpha.screens.SearchCotegoryScreen
+import com.example.ugly_galleryalpha.screens.SettingUserScreen
 import com.example.ugly_galleryalpha.screens.StartScreen
 
 
@@ -70,7 +71,7 @@ fun NavGraphScreen(
             composable(
                 BottomItem.ScreenProfile.route
             ){
-                MyProfileScreen()
+                MyProfileScreen(navController = navHostController)
             }
 
         // код с открытием внизу
@@ -79,5 +80,11 @@ fun NavGraphScreen(
         composable(ScreenSealed.DetailPost.route) {
             DetailPostScreen(navController = navHostController)
         }
+
+            composable(
+                route = ScreenSealed.UserSettings.route
+            ){
+                SettingUserScreen(navController = navHostController)
+            }
     }
 }
