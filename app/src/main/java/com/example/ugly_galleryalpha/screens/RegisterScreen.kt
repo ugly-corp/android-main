@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -32,6 +33,13 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.ugly_galleryalpha.navigation.ScreenSealed
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.lang.Exception
 
 
 // Экран регистрации
@@ -39,6 +47,14 @@ import com.example.ugly_galleryalpha.navigation.ScreenSealed
 fun RegisterScreen(
     navController: NavController
 ){
+    val auth = FirebaseAuth.getInstance()
+    // Логин
+    val loginState = remember { mutableStateOf("") }
+    // Email
+    val emailState = remember { mutableStateOf("") }
+    // Пароль
+    val passwordState = remember { mutableStateOf("") }
+
     Column(){
         Text(
             modifier = Modifier.padding(16.dp),
@@ -62,14 +78,13 @@ fun RegisterScreen(
                 .fillMaxSize()
         ){
             Spacer(modifier = Modifier.padding(16.dp))
-            LoginInput()
+            LoginInput(loginState)
             Spacer(modifier = Modifier.padding(8.dp))
-            EmailInput()
+            EmailInput(emailState)
             Spacer(modifier = Modifier.padding(8.dp))
-            PasswordInput()
+            PasswordInput(passwordState)
         }
     }
-
 
     Column(
         modifier = Modifier
@@ -78,15 +93,27 @@ fun RegisterScreen(
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        //Войти
+
         Button(
-            modifier = Modifier
-                .padding(start = 32.dp, end = 32.dp, bottom = 48.dp)
-                .fillMaxWidth(),
             onClick = {
-                      navController.navigate(ScreenSealed.Home.route)
-                      },
+                val email = emailState.value
+                val password = passwordState.value
+                val username = loginState.value
+                CoroutineScope(Dispatchers.Main).launch {
+                    registerWithEmailAndPassword(auth, email, password, username) { success ->
+                        if (success) {
+                            navController.navigate(ScreenSealed.Home.route)
+                        } else {
+                            // Обработка ошибок регистрации
+                        }
+                    }
+                }
+            },
             colors = ButtonDefaults.buttonColors(UGreen),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 32.dp, end = 32.dp, bottom = 48.dp)
+
         ) {
             Text(
                 text = "Создать",
@@ -97,59 +124,58 @@ fun RegisterScreen(
     }
 }
 
-//Логин функция
-@Composable
-fun LoginInput(){
-    //Логин
-    val login_state = remember{ mutableStateOf("")}
 
+
+
+@Composable
+fun LoginInput(loginState: MutableState<String>){
     OutlinedTextField(
-        value = login_state.value,
-        onValueChange = {
-            login_state.value = it
-        },
-        label = {
-            Text(text = "Имя пользователя")
-        },
+        value = loginState.value,
+        onValueChange = { loginState.value = it },
+        label = { Text(text = "Имя пользователя") },
         shape = RoundedCornerShape(8.dp)
     )
 }
 
-
-//Email функция
 @Composable
-fun EmailInput(){
-    //Логин
-    val email_state = remember{ mutableStateOf("")}
-
+fun EmailInput(emailState: MutableState<String>){
     OutlinedTextField(
-        value = email_state.value,
-        onValueChange = {
-            email_state.value = it
-        },
-        label = {
-            Text(text = "Email")
-        },
+        value = emailState.value,
+        onValueChange = { emailState.value = it },
+        label = { Text(text = "Email") },
         shape = RoundedCornerShape(8.dp),
     )
 }
 
-//Пароль функция
 @Composable
-fun PasswordInput(){
-    //Логин
-    val password_state = remember{ mutableStateOf("")}
-
+fun PasswordInput(passwordState: MutableState<String>){
     OutlinedTextField(
-        value = password_state.value,
-        onValueChange = {
-            password_state.value = it
-        },
-        label = {
-            Text(text = "Пароль")
-        },
+        value = passwordState.value,
+        onValueChange = { passwordState.value = it },
+        label = { Text(text = "Пароль") },
         shape = RoundedCornerShape(8.dp)
     )
+}
+
+//Функция регистрации
+
+private suspend fun registerWithEmailAndPassword(
+    auth: FirebaseAuth,
+    email: String,
+    password: String,
+    username: String,
+    onComplete: (Boolean) -> Unit
+){
+    try {
+        val result = auth.createUserWithEmailAndPassword(email, password).await()
+        result.user?.updateProfile(UserProfileChangeRequest.Builder()
+            .setDisplayName(username)
+            .build())
+            ?.await()
+        onComplete(true)
+    } catch (e: Exception){
+        onComplete(false)
+    }
 }
 
 

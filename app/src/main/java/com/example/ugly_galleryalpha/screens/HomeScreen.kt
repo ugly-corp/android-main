@@ -63,9 +63,10 @@ fun HomeScreen(navController: NavController){
             modifier = Modifier
                 .fillMaxSize()
         ){
-            items(post_list){ model ->
+            items(post_list.size / 2){ index ->
                 Lenta(
-                    model = model,
+                    model1 = post_list[index * 2],
+                    model2 = post_list[index * 2 + 1],
                     navController = navController
                 )
             }
@@ -117,16 +118,17 @@ fun PostLenta(
 // Лента
 @Composable
 fun Lenta(
-    model: postLentaModel,
+    model1: postLentaModel,
+    model2: postLentaModel,
     navController: NavController
 ) {
     Column {
         Row(
             horizontalArrangement = Arrangement.Start,
         ) {
-            PostLenta(model, navController) // Передаем navController в PostLenta
+            PostLenta(model1, navController) // Передаем navController в PostLenta
             Spacer(modifier = Modifier.padding(8.dp))
-            PostLenta(model, navController) // Передаем navController в PostLenta
+            PostLenta(model2, navController) // Передаем navController в PostLenta
         }
     }
 }

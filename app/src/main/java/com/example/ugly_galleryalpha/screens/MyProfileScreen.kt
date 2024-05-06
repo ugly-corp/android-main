@@ -39,9 +39,14 @@ import com.example.ugly_galleryalpha.R
 import com.example.ugly_galleryalpha.navigation.ScreenSealed
 import com.example.ugly_galleryalpha.ui.theme.UGreen
 import com.example.ugly_galleryalpha.ui.theme.Ugly_galleryALPHATheme
+import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun MyProfileScreen(navController: NavController){
+fun MyProfileScreen(navController: NavController, username: String){
+
+    val auth = FirebaseAuth.getInstance()
+    val currentUser = auth.currentUser
+    val username = currentUser?.displayName ?: "User"
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
@@ -107,7 +112,7 @@ fun MyProfileScreen(navController: NavController){
             }
         }
 
-        MyName(name = "User", info = "User_info")
+        MyName(name = username, info = "{$username}_info")
         ButtonSettingandHelp(navController = navController)
 
 
@@ -227,6 +232,6 @@ fun add_photo(){
 @Composable
 fun MyProfilePreview() {
     Ugly_galleryALPHATheme {
-        MyProfileScreen(navController = rememberNavController())
+        MyProfileScreen(navController = rememberNavController(), username = "User")
     }
 }

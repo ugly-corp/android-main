@@ -71,7 +71,7 @@ fun NavGraphScreen(
             composable(
                 BottomItem.ScreenProfile.route
             ){
-                MyProfileScreen(navController = navHostController)
+                MyProfileScreen(navController = navHostController, username = "User")
             }
 
         // код с открытием внизу

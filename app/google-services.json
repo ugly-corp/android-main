@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "883878115037",
+    "project_id": "ugly-gallery-alpha",
+    "storage_bucket": "ugly-gallery-alpha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:883878115037:android:25799c6164bf9b95dbcd34",
+        "android_client_info": {
+          "package_name": "com.example.ugly_galleryalpha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD4Qk7bP40AdR2SHhgAzjzjmsCm-TabvOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

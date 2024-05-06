@@ -15,6 +15,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -29,12 +30,25 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.ugly_galleryalpha.navigation.ScreenSealed
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import java.lang.Exception
 
 
 @Composable
 fun AuthScreen(
     navController: NavController
 ){
+    val auth = FirebaseAuth.getInstance()
+    //Логин
+    val email_state = remember{ mutableStateOf("") }
+    //Паорль
+    val password_state = remember{ mutableStateOf("") }
+
+
     Column(){
         Text(
             modifier = Modifier.padding(16.dp),
@@ -58,9 +72,33 @@ fun AuthScreen(
                 .fillMaxSize()
         ){
             Spacer(modifier = Modifier.padding(8.dp))
-            EmailAuthInput()
-            Spacer(modifier = Modifier.padding(8.dp))
-            PasswordAuthInput()
+
+
+            OutlinedTextField(
+                value = email_state.value,
+                onValueChange = {
+                    email_state.value = it
+                },
+                label = {
+                    Text(text = "Email")
+                },
+                shape = RoundedCornerShape(8.dp),
+            )
+
+
+
+            OutlinedTextField(
+                value = password_state.value,
+                onValueChange = {
+                    password_state.value = it
+                },
+                label = {
+                    Text(text = "Пароль")
+                },
+                shape = RoundedCornerShape(8.dp)
+            )
+
+
         }
     }
 
@@ -96,7 +134,15 @@ fun AuthScreen(
                 .padding(start = 32.dp, end = 32.dp, bottom = 48.dp)
                 .fillMaxWidth(),
             onClick = {
-                      navController.navigate(route = ScreenSealed.Home.route)
+                      CoroutineScope(Dispatchers.Main).launch {
+                          signInWithEmailAndPassword(auth, email_state, password_state){ success ->
+                              if (success){
+                                  navController.navigate(route = ScreenSealed.Home.route)
+                              }else{
+
+                              }
+                          }
+                      }
                       },
             colors = ButtonDefaults.buttonColors(UGreen),
         ) {
@@ -110,41 +156,20 @@ fun AuthScreen(
     }
 }
 
-//Email функция
-@Composable
-fun EmailAuthInput(){
-    //Логин
-    val email_state = remember{ mutableStateOf("") }
-
-    OutlinedTextField(
-        value = email_state.value,
-        onValueChange = {
-            email_state.value = it
-        },
-        label = {
-            Text(text = "Email")
-        },
-        shape = RoundedCornerShape(8.dp),
-    )
+private suspend fun signInWithEmailAndPassword(
+    auth: FirebaseAuth,
+    email: MutableState<String>,
+    password: MutableState<String>,
+    onComplete: (Boolean) -> Unit
+){
+    try {
+        val result = auth.signInWithEmailAndPassword(email.value, password.value).await()
+        onComplete(true)
+    } catch (e: Exception){
+        onComplete(false)
+    }
 }
 
-//Пароль функция
-@Composable
-fun PasswordAuthInput(){
-    //Логин
-    val password_state = remember{ mutableStateOf("") }
-
-    OutlinedTextField(
-        value = password_state.value,
-        onValueChange = {
-            password_state.value = it
-        },
-        label = {
-            Text(text = "Пароль")
-        },
-        shape = RoundedCornerShape(8.dp)
-    )
-}
 
 
 @Preview(showBackground = true)

@@ -27,7 +27,7 @@ fun NavGraphBottom(
             FavoritePostScreen()
         }
         composable("screen_profile_4"){
-            MyProfileScreen(rememberNavController())
+            MyProfileScreen(rememberNavController(), username = "User")
         }
     }
 }
