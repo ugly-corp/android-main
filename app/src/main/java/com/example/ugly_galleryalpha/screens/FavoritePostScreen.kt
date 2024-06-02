@@ -31,6 +31,8 @@ fun FavoritePostScreen(){
             verticalAlignment = Alignment.Top,
             modifier = Modifier.fillMaxWidth()
         ){
+
+
             Text(
                 modifier = Modifier.padding(start = 43.dp, end = 43.dp),
                 text = "Избранное",
