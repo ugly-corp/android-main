@@ -145,6 +145,7 @@ fun AuthScreen(
                       }
                       },
 
+
             colors = ButtonDefaults.buttonColors(UGreen),
         ) {
             Text(
