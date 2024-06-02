@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
                 //navController = rememberNavController()
                 //NavGraphScreen(navHostController = navController)
                 MainScreen()
+
             }
         }
     }
