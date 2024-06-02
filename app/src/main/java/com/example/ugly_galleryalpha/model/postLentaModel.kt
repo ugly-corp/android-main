@@ -6,4 +6,6 @@ data class postLentaModel (
     var image_work: Int, //фото работы
     var opisanie: String, //описание
     var id_work: Int, //Id работы
+
+
 )
