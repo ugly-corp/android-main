@@ -5,27 +5,22 @@ import com.example.ugly_galleryalpha.ui.theme.Ugly_galleryALPHATheme
 
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,13 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.ugly_galleryalpha.navigation.ScreenSealed
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserProfileChangeRequest
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import java.lang.Exception
+
 
 
 // Экран регистрации
@@ -47,7 +36,7 @@ import java.lang.Exception
 fun RegisterScreen(
     navController: NavController
 ){
-    val auth = FirebaseAuth.getInstance()
+
     // Логин
     val loginState = remember { mutableStateOf("") }
     // Email
@@ -96,18 +85,8 @@ fun RegisterScreen(
 
         Button(
             onClick = {
-                val email = emailState.value
-                val password = passwordState.value
-                val username = loginState.value
-                CoroutineScope(Dispatchers.Main).launch {
-                    registerWithEmailAndPassword(auth, email, password, username) { success ->
-                        if (success) {
-                            navController.navigate(ScreenSealed.Home.route)
-                        } else {
-                            // Обработка ошибок регистрации
-                        }
-                    }
-                }
+                navController.navigate(ScreenSealed.Home.route)
+
             },
             colors = ButtonDefaults.buttonColors(UGreen),
             modifier = Modifier
@@ -157,26 +136,7 @@ fun PasswordInput(passwordState: MutableState<String>){
     )
 }
 
-//Функция регистрации
 
-private suspend fun registerWithEmailAndPassword(
-    auth: FirebaseAuth,
-    email: String,
-    password: String,
-    username: String,
-    onComplete: (Boolean) -> Unit
-){
-    try {
-        val result = auth.createUserWithEmailAndPassword(email, password).await()
-        result.user?.updateProfile(UserProfileChangeRequest.Builder()
-            .setDisplayName(username)
-            .build())
-            ?.await()
-        onComplete(true)
-    } catch (e: Exception){
-        onComplete(false)
-    }
-}
 
 
 @Composable

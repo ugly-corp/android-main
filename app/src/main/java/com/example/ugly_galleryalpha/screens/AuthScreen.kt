@@ -30,19 +30,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.ugly_galleryalpha.navigation.ScreenSealed
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
-import java.lang.Exception
-
 
 @Composable
 fun AuthScreen(
     navController: NavController
 ){
-    val auth = FirebaseAuth.getInstance()
     //Логин
     val email_state = remember{ mutableStateOf("") }
     //Паорль
@@ -134,15 +126,7 @@ fun AuthScreen(
                 .padding(start = 32.dp, end = 32.dp, bottom = 48.dp)
                 .fillMaxWidth(),
             onClick = {
-                      CoroutineScope(Dispatchers.Main).launch {
-                          signInWithEmailAndPassword(auth, email_state, password_state){ success ->
-                              if (success){
-                                  navController.navigate(route = ScreenSealed.Home.route)
-                              }else{
-
-                              }
-                          }
-                      }
+                navController.navigate(route = ScreenSealed.Home.route)
                       },
 
 
@@ -158,19 +142,7 @@ fun AuthScreen(
     }
 }
 
-private suspend fun signInWithEmailAndPassword(
-    auth: FirebaseAuth,
-    email: MutableState<String>,
-    password: MutableState<String>,
-    onComplete: (Boolean) -> Unit
-){
-    try {
-        val result = auth.signInWithEmailAndPassword(email.value, password.value).await()
-        onComplete(true)
-    } catch (e: Exception){
-        onComplete(false)
-    }
-}
+
 
 
 

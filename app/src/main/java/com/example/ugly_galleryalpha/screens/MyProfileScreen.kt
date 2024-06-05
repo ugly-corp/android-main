@@ -44,9 +44,6 @@ import com.google.firebase.auth.FirebaseAuth
 @Composable
 fun MyProfileScreen(navController: NavController, username: String){
 
-    val auth = FirebaseAuth.getInstance()
-    val currentUser = auth.currentUser
-    val username = currentUser?.displayName ?: "User"
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
