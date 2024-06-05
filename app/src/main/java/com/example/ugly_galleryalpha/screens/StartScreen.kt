@@ -33,6 +33,7 @@ import com.example.ugly_galleryalpha.ui.theme.Ugly_galleryALPHATheme
 fun StartScreen(
     navController: NavController
 ){
+
     Box(
         modifier = Modifier
             .fillMaxSize()
