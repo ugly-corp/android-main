@@ -1,0 +1,161 @@
+package com.example.ugly_galleryalpha.Presentation.screens.Home
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.ugly_galleryalpha.Domain.model.postLentaModel
+import com.example.ugly_galleryalpha.Presentation.navigation.ScreenSealed
+import com.example.ugly_galleryalpha.R
+import com.example.ugly_galleryalpha.ui.theme.Ugly_galleryALPHATheme
+
+@Composable
+fun LentaPost(model: postLentaModel) {
+    Column {
+
+        BoxWithConstraints(
+            modifier = Modifier
+                .size(370.dp, 400.dp)
+                .clickable { // Сделать переход на пост
+                }
+        ) {
+            Card(
+                modifier = Modifier
+                    .fillMaxSize(),
+                elevation = 8.dp,
+                shape = RoundedCornerShape(30.dp)
+            ) {
+                Image(
+                    painter = painterResource(model.image_work),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            // Наложение UserNameCard поверх Card
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(8.dp)
+                    .fillMaxWidth(),
+            ) {
+                Row(
+                    Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ){
+                    UserNameCard(model)
+                    LikeLentaPost()
+                }
+
+            }
+
+        }
+         NamePost(model)
+    }
+}
+@Composable
+fun UserNameCard(userName: postLentaModel) {
+    Box(
+        modifier = Modifier
+            .padding(16.dp)
+            .background(
+                color = Color.Black.copy(alpha = 0.65f), // Прозрачность 30%
+                shape = RoundedCornerShape(90.dp) // Мягкие углы
+            )
+            .padding(16.dp)
+    ) {
+        Row(
+            //modifier = Modifier.size(60.dp)
+            verticalAlignment = Alignment.CenterVertically
+        ){
+
+            Card(
+                modifier = Modifier.size(40.dp),
+                shape = RoundedCornerShape(180.dp)
+            ){
+                Image(
+                    painter = painterResource(id = R.drawable.photo4),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop
+                )
+            }
+
+            Spacer(modifier = Modifier.padding(8.dp))
+
+            Text(
+                text = userName.name_artist,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+            )
+
+
+
+        }
+    }
+}
+
+@Composable
+fun LikeLentaPost(){
+    Box(
+        modifier = Modifier
+            .padding(16.dp)
+            .background(
+                color = Color.Black.copy(alpha = 0.65f), // Прозрачность 65%
+                shape = RoundedCornerShape(90.dp) // Мягкие углы
+            )
+            .padding(16.dp)
+    ) {
+        Image(painter = painterResource(id = R.drawable.ic_android_black_24dp), contentDescription = null)
+    }
+}
+
+@Composable
+fun NamePost(model: postLentaModel){
+    Text(
+        modifier = Modifier.padding(8.dp),
+        text = model.name_work,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
+        color = Color.White
+    )
+
+    Text(
+        modifier = Modifier.padding(start = 8.dp),
+        text = model.opisanie,
+        fontSize = 12.sp,
+        color = Color.White
+    )
+
+    Spacer(modifier = Modifier.padding(20.dp))
+}
+@Preview(showBackground = true)
+@Composable
+fun GreetingPreview() {
+    Ugly_galleryALPHATheme {
+        LentaPost(postLentaModel("Mr_wagner", "Оружие", R.drawable.photo3, "bla1", 3))
+    }
+}
