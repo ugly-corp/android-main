@@ -1,5 +1,6 @@
 package com.example.ugly_galleryalpha.Presentation.screens.Home
 
+import android.widget.ImageView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,17 +24,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import com.example.ugly_galleryalpha.Domain.model.Category
+import com.example.ugly_galleryalpha.Domain.model.DataXXpost
+import com.example.ugly_galleryalpha.Domain.model.User
 import com.example.ugly_galleryalpha.Domain.model.postLentaModel
-import com.example.ugly_galleryalpha.Presentation.navigation.ScreenSealed
 import com.example.ugly_galleryalpha.R
 import com.example.ugly_galleryalpha.ui.theme.Ugly_galleryALPHATheme
+import com.squareup.picasso.Picasso
 
 @Composable
-fun LentaPost(model: postLentaModel) {
+fun LentaPost(model: DataXXpost) {
     Column {
 
         BoxWithConstraints(
@@ -48,11 +52,16 @@ fun LentaPost(model: postLentaModel) {
                 elevation = 8.dp,
                 shape = RoundedCornerShape(30.dp)
             ) {
+
+                PicassoImage(url = model.photo)
+
+                """""
                 Image(
-                    painter = painterResource(model.image_work),
+                    painter = painterResource(id = R.drawable.photo4),
                     contentDescription = null,
                     contentScale = ContentScale.Crop
                 )
+                """
             }
 
             // Наложение UserNameCard поверх Card
@@ -77,7 +86,7 @@ fun LentaPost(model: postLentaModel) {
     }
 }
 @Composable
-fun UserNameCard(userName: postLentaModel) {
+fun UserNameCard(userName: DataXXpost) {
     Box(
         modifier = Modifier
             .padding(16.dp)
@@ -96,17 +105,22 @@ fun UserNameCard(userName: postLentaModel) {
                 modifier = Modifier.size(40.dp),
                 shape = RoundedCornerShape(180.dp)
             ){
+
+                //Заменить то что ниже
+                PicassoImage(url = userName.user.avatar)
+                """""
                 Image(
                     painter = painterResource(id = R.drawable.photo4),
                     contentDescription = null,
                     contentScale = ContentScale.Crop
                 )
+                """
             }
 
             Spacer(modifier = Modifier.padding(8.dp))
 
             Text(
-                text = userName.name_artist,
+                text = userName.user.name,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White,
@@ -134,10 +148,10 @@ fun LikeLentaPost(){
 }
 
 @Composable
-fun NamePost(model: postLentaModel){
+fun NamePost(model: DataXXpost){
     Text(
         modifier = Modifier.padding(8.dp),
-        text = model.name_work,
+        text = model.title,
         fontWeight = FontWeight.Bold,
         fontSize = 24.sp,
         color = Color.White
@@ -145,17 +159,46 @@ fun NamePost(model: postLentaModel){
 
     Text(
         modifier = Modifier.padding(start = 8.dp),
-        text = model.opisanie,
+        text = model.description,
         fontSize = 12.sp,
         color = Color.White
     )
 
     Spacer(modifier = Modifier.padding(20.dp))
 }
+
+//Тест пикассо
+@Composable
+fun PicassoImage(url: String) {
+    AndroidView(
+        factory = { context ->
+            ImageView(context).apply {
+                Picasso.get()
+                    .load(url)
+                    .into(this)
+            }
+        }
+    )
+}
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     Ugly_galleryALPHATheme {
-        LentaPost(postLentaModel("Mr_wagner", "Оружие", R.drawable.photo3, "bla1", 3))
+
+        val photo = painterResource(id = R.drawable.photo4).toString()
+
+        val categories: List<Category> = listOf(
+            Category(id = 1, name = "Electronics", photo = photo),
+        )
+
+        val user: User = User(
+            avatar = photo,
+            email = "user123@example.com",
+            id = 123,
+            name = "John Doe"
+        )
+
+        LentaPost(model = DataXXpost(categories, "Hi, it's my first post", 1, photo, "Hello", user, 1))
     }
 }

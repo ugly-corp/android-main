@@ -4,7 +4,7 @@ data class DataXXpost(
     val categories: List<Category>,
     val description: String,
     val id: Int,
-    val photo: String,
+    val photo: String, //Был String
     val title: String,
     val user: User,
     val views_counter: Int
