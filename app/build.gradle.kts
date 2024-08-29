@@ -70,6 +70,12 @@ dependencies {
     //Picasso
     implementation ("com.squareup.picasso:picasso:2.8")
 
+    //Coil and Accompanist
+    implementation("io.coil-kt:coil-compose:2.0.0")
+    implementation("com.google.accompanist:accompanist-coil:0.15.0") // 0.28.0 не ставить
+
+
+
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")

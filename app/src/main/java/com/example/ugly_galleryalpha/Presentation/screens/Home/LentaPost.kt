@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
+import coil.compose.SubcomposeAsyncImage
 import com.example.ugly_galleryalpha.Domain.model.Category
 import com.example.ugly_galleryalpha.Domain.model.DataXXpost
 import com.example.ugly_galleryalpha.Domain.model.User
@@ -38,7 +39,10 @@ import com.squareup.picasso.Picasso
 
 @Composable
 fun LentaPost(model: DataXXpost) {
-    Column {
+    Column (
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ){
 
         BoxWithConstraints(
             modifier = Modifier
@@ -53,7 +57,7 @@ fun LentaPost(model: DataXXpost) {
                 shape = RoundedCornerShape(30.dp)
             ) {
 
-                PicassoImage(url = model.photo)
+                PicassoImageImage(url = model.photo)
 
                 """""
                 Image(
@@ -148,23 +152,31 @@ fun LikeLentaPost(){
 }
 
 @Composable
-fun NamePost(model: DataXXpost){
-    Text(
-        modifier = Modifier.padding(8.dp),
-        text = model.title,
-        fontWeight = FontWeight.Bold,
-        fontSize = 24.sp,
-        color = Color.White
-    )
+fun NamePost(model: DataXXpost) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()  // Заполняем всю ширину родителя
+            .padding(8.dp)   // Внешний отступ
+    ) {
+        // Заголовок поста
+        Text(
+            text = model.title,
+            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp,
+            color = Color.White,
+            modifier = Modifier.align(Alignment.Start) // Выравниваем текст по левому краю
+        )
 
-    Text(
-        modifier = Modifier.padding(start = 8.dp),
-        text = model.description,
-        fontSize = 12.sp,
-        color = Color.White
-    )
+        // Описание поста
+        Text(
+            text = model.description,
+            fontSize = 12.sp,
+            color = Color.White,
+            modifier = Modifier.align(Alignment.Start) // Выравниваем текст по левому краю
+        )
 
-    Spacer(modifier = Modifier.padding(20.dp))
+        Spacer(modifier = Modifier.padding(20.dp))
+    }
 }
 
 //Тест пикассо
@@ -178,6 +190,16 @@ fun PicassoImage(url: String) {
                     .into(this)
             }
         }
+    )
+}
+
+@Composable
+fun PicassoImageImage(url: String, contentDescription: String? = null, contentScale: ContentScale = ContentScale.Crop) {
+    SubcomposeAsyncImage(
+        model = url,
+        contentDescription = contentDescription,
+        contentScale = contentScale,
+        //modifier = Modifier.fillMaxSize(), // Модификатор размера, если требуется
     )
 }
 

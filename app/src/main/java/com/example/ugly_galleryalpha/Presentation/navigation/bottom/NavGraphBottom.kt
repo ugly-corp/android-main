@@ -8,7 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.ugly_galleryalpha.Presentation.screens.Favorite.FavoritePostScreen
 import com.example.ugly_galleryalpha.Presentation.screens.Home.HomeScreen
 import com.example.ugly_galleryalpha.Presentation.screens.MyProfile.MyProfileScreen
-import com.example.ugly_galleryalpha.Presentation.screens.Search.SearchCotegoryScreen
+import com.example.ugly_galleryalpha.Presentation.screens.Search.SearchCategoryScreen
 
 @Composable
 fun NavGraphBottom(
@@ -20,7 +20,7 @@ fun NavGraphBottom(
             HomeScreen(rememberNavController())
         }
         composable("screen_search_2"){
-            SearchCotegoryScreen()
+            SearchCategoryScreen()
         }
         composable("screen_favorite_3"){
             FavoritePostScreen()

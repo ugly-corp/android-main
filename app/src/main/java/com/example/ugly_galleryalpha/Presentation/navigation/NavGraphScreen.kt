@@ -15,7 +15,7 @@ import com.example.ugly_galleryalpha.Presentation.screens.Favorite.FavoritePostS
 import com.example.ugly_galleryalpha.Presentation.screens.Home.HomeScreen
 import com.example.ugly_galleryalpha.Presentation.screens.MyProfile.MyProfileScreen
 import com.example.ugly_galleryalpha.Presentation.screens.Register.RegisterScreen
-import com.example.ugly_galleryalpha.Presentation.screens.Search.SearchCotegoryScreen
+import com.example.ugly_galleryalpha.Presentation.screens.Search.SearchCategoryScreen
 import com.example.ugly_galleryalpha.Presentation.screens.Setting.SettingUserScreen
 import com.example.ugly_galleryalpha.Presentation.screens.Start.StartScreen
 
@@ -66,7 +66,7 @@ fun NavGraphScreen(
             composable(
                 BottomItem.ScreenSearch.route
             ){
-                SearchCotegoryScreen()
+                SearchCategoryScreen()
             }
 
             composable(

@@ -12,7 +12,7 @@ import retrofit2.Response
 class NetWorkPostImpl : PostRepository {
 
     override fun getListPost(callback: (List<DataXXpost>?) -> Unit) {
-        RetrofitInstance.api.getPosts().enqueue(object : Callback<ApiResponce> {
+        RetrofitInstance.postApi.getPosts().enqueue(object : Callback<ApiResponce> {
             override fun onResponse(call: Call<ApiResponce>, response: Response<ApiResponce>) {
                 if (response.isSuccessful) {
                     val data = response.body()?.data
